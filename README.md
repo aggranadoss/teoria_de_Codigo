@@ -14,4 +14,4 @@ Repo para guardar las ideas, exposiciones en latex de teoría de código y reali
 
 - [EMALCA](https://sites.google.com/view/appliedalg24/home "EMALCA")
 
-- [Libros]()
+- [Libros](https://github.com/aggranadoss/teoria_de_Codigo/tree/main/libros)
