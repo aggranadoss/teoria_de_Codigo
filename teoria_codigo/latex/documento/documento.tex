@@ -1,0 +1,38 @@
+\documentclass[a4paper,12pt,twoside,letterpaper]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{upgreek}
+\usepackage{mathtools}
+\usepackage{svg}
+
+
+
+
+\newcommand{\reporttitle}{Proyect 1}
+\newcommand{\reportauthorOne}{Student 1}
+\newcommand{\cidOne}{your id number}
+\newcommand{\reportauthorTwo}{Student 2}
+\newcommand{\cidTwo}{your id number}
+\newcommand{\reporttype}{Coursework}
+\bibliographystyle{plain}
+
+\input{includes} 
+\input{notation} 
+
+\begin{document}
+	
+	\input{titlepage}
+	\tableofcontents
+	
+	\include{introduccion}
+	\include{preliminares}
+	\include{conclusion}
+	
+	% Definición de colores
+	\definecolor{pastelblue}{RGB}{173, 216, 230} % Azul pastel
+	\definecolor{pastelpink}{RGB}{255, 182, 193} % Rosa pastel
+	
+	
+	%Bibliografía	
+	\bibliographystyle{plain}
+	\bibliography{bib} 	
+\end{document}

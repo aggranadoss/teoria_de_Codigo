@@ -1,0 +1,216 @@
+
+%	Doc. configuracion
+%-------------------------------------------------
+\usepackage{ifxetex}
+\usepackage{textpos}
+\usepackage{natbib}
+\usepackage{kpfonts}
+\usepackage{longtable}
+\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{geometry}
+
+\geometry{paperwidth=210mm, paperheight=297mm, margin=2.54cm, centering=true}
+
+
+
+
+
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage[tight,ugly]{units}
+\usepackage{url}
+\usepackage{float}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{dsfont}
+\usepackage{epstopdf} 
+\usepackage{natbib}
+\usepackage{backref}
+\usepackage{array}
+\usepackage{latexsym}
+\usepackage{etoolbox}
+
+
+
+\usepackage{enumerate} % enumerar con (a]
+
+
+
+\ifxetex
+\usepackage{fontspec}
+\setmainfont[Scale=.8]{OpenDyslexic-Regular}
+\else
+\usepackage[pdftex,pagebackref,hypertexnames=false,colorlinks]{hyperref} % incluir link
+\hypersetup{pdftitle={},
+  pdfsubject={}, 
+  pdfauthor={\reportauthorOne},
+  pdfkeywords={}, 
+  pdfstartview=FitH,
+  pdfpagemode={UseOutlines},% None, FullScreen, UseOutlines
+  bookmarksnumbered=true, bookmarksopen=true, colorlinks,
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black}
+\usepackage[all]{hypcap}
+\fi
+
+
+\usepackage{tcolorbox}
+
+%  teoremas
+
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\usepackage[spanish]{babel}
+% Entorno de ejemplo
+
+
+
+
+
+\ifxetex
+\else
+\renewcommand*{\rmdefault}{bch} % Charter
+\renewcommand*{\ttdefault}{cmtt} % Computer 
+
+\fi
+
+\setlength{\parindent}{0em} 
+
+\setlength{\headheight}{14.5pt}
+\pagestyle{fancy}
+\fancyfoot[ER,OL]{\thepage}
+\fancyfoot[OC,EC]{\sffamily }
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0.1pt}
+\captionsetup{margin=10pt,font=small,labelfont=bf}
+
+
+%--- Capitulo
+
+\def\@makechapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedright %\sffamily
+       
+    \interlinepenalty\@M
+    \Huge \bfseries 
+    \thechapter \space\space #1\par\nobreak
+    \vskip 30\p@
+  }}
+
+%---cabeza  
+\def\@makeschapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedright
+    \sffamily
+    \interlinepenalty\@M
+    \Huge \bfseries  
+    #1\par\nobreak
+    \vskip 30\p@
+  }}
+  
+
+
+
+% %cajas
+\def\Beginboxit
+   {\par
+    \vbox\bgroup
+	   \hrule
+	   \hbox\bgroup
+		  \vrule \kern1.2pt %
+		  \vbox\bgroup\kern1.2pt
+   }
+
+\def\Endboxit{%
+			      \kern1.2pt
+		       \egroup
+		  \kern1.2pt\vrule
+		\egroup
+	   \hrule
+	 \egroup
+   }	
+
+\newenvironment{boxit}{\Beginboxit}{\Endboxit}
+\newenvironment{boxit*}{\Beginboxit\hbox to\hsize{}}{\Endboxit}
+
+
+
+\allowdisplaybreaks
+
+\makeatletter
+\newcounter{elimination@steps}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash$}p{#1}<{$}}
+\def\elimination@num@rights{}
+\def\elimination@num@variables{}
+\def\elimination@col@width{}
+\newenvironment{elimination}[4][0]
+{
+    \setcounter{elimination@steps}{0}
+    \def\elimination@num@rights{#1}
+    \def\elimination@num@variables{#2}
+    \def\elimination@col@width{#3}
+    \renewcommand{\arraystretch}{#4}
+    \start@align\@ne\st@rredtrue\m@ne
+}
+{
+    \endalign
+    \ignorespacesafterend
+}
+\newcommand{\eliminationstep}[2]
+{
+    \ifnum\value{elimination@steps}>0\leadsto\quad\fi
+    \left[
+        \ifnum\elimination@num@rights>0
+            \begin{array}
+            {@{}*{\elimination@num@variables}{R{\elimination@col@width}}
+            |@{}*{\elimination@num@rights}{R{\elimination@col@width}}}
+        \else
+            \begin{array}
+            {@{}*{\elimination@num@variables}{R{\elimination@col@width}}}
+        \fi
+            #1
+        \end{array}
+    \right]
+    & 
+    \begin{array}{l}
+        #2
+    \end{array}
+    &%                                    moved second & here
+    \addtocounter{elimination@steps}{1}
+}
+\makeatother
+
+%% Fast macro for column vectors
+\makeatletter  
+\def\colvec#1{\expandafter\colvec@i#1,,,,,,,,,\@nil}
+\def\colvec@i#1,#2,#3,#4,#5,#6,#7,#8,#9\@nil{% 
+  \ifx$#2$ \begin{bmatrix}#1\end{bmatrix} \else
+    \ifx$#3$ \begin{bmatrix}#1\\#2\end{bmatrix} \else
+      \ifx$#4$ \begin{bmatrix}#1\\#2\\#3\end{bmatrix}\else
+        \ifx$#5$ \begin{bmatrix}#1\\#2\\#3\\#4\end{bmatrix}\else
+          \ifx$#6$ \begin{bmatrix}#1\\#2\\#3\\#4\\#5\end{bmatrix}\else
+            \ifx$#7$ \begin{bmatrix}#1\\#2\\#3\\#4\\#5\\#6\end{bmatrix}\else
+              \ifx$#8$ \begin{bmatrix}#1\\#2\\#3\\#4\\#5\\#6\\#7\end{bmatrix}\else
+                 \PackageError{Column Vector}{The vector you tried to write is too big, use bmatrix instead}{Try using the bmatrix environment}
+              \fi
+            \fi
+          \fi
+        \fi
+      \fi
+    \fi
+  \fi 
+}  
+\makeatother
+
+\robustify{\colvec}
+
+
+%%% final 
